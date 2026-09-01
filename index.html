@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Épiquébec</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Épiquébec">
+<meta name="theme-color" content="#1a6b3c">
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22%C3%89piqu%C3%A9bec%22%2C%22short_name%22%3A%22%C3%89piqu%C3%A9bec%22%2C%22description%22%3A%22Sp%C3%A9ciaux%20d%27%C3%A9picerie%20du%20Qu%C3%A9bec%22%2C%22start_url%22%3A%22%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23f5f0eb%22%2C%22theme_color%22%3A%22%231a6b3c%22%2C%22lang%22%3A%22fr-CA%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%3D%2527http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%2527%2520viewBox%3D%25270%25200%2520100%2520100%2527%253E%253Crect%2520width%3D%2527100%2527%2520height%3D%2527100%2527%2520fill%3D%2527%25231a6b3c%2527%2520rx%3D%252720%2527%2F%253E%253Ctext%2520y%3D%252770%2527%2520x%3D%252750%2527%2520text-anchor%3D%2527middle%2527%2520font-size%3D%252760%2527%253E%25F0%259F%258D%2581%253C%2F%2520text%253E%253C%2Fsvg%253E%22%2C%22sizes%22%3A%22any%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%7D%5D%7D">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f0eb;color:#1c1c1e;max-width:480px;margin:0 auto;padding-bottom:72px;min-height:100vh}
+
+/* ── Header ── */
+header{position:sticky;top:0;z-index:100}
+.header-gradient{background:linear-gradient(135deg,#1a6b3c 0%,#2ecc71 100%);padding:14px 16px 12px}
+.header-top{display:flex;justify-content:space-between;align-items:flex-start}
+h1{font-size:22px;font-weight:700;color:#fff;margin-bottom:3px}
+.header-subtitle{font-size:12px;color:rgba(255,255,255,.78)}
+.header-right{display:flex;align-items:center;gap:8px;padding-top:2px}
+.icon-btn{background:rgba(255,255,255,.2);border:none;font-size:18px;cursor:pointer;padding:5px 8px;color:#fff;line-height:1;border-radius:8px}
+.filter-bar-wrap{background:#fff;padding:8px 16px 2px;box-shadow:0 2px 8px rgba(0,0,0,.10)}
+.filter-bar{display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none}
+.filter-bar::-webkit-scrollbar{display:none}
+.fbtn{flex-shrink:0;padding:6px 14px;border-radius:20px;border:1.5px solid #e5e5ea;background:#fff;font-size:13px;font-weight:600;color:#3c3c43;cursor:pointer;transition:all .15s;letter-spacing:.1px}
+.fbtn.on{background:#1a6b3c;border-color:#1a6b3c;color:#fff}
+.fbtn.qc-btn.on{background:#c0392b;border-color:#c0392b;color:#fff}
+
+/* ── Navigation ── */
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#fff;border-top:2px solid #1a6b3c;display:flex;z-index:200}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:7px 0 9px;cursor:pointer;color:#8e8e93;font-size:10px;gap:1px;transition:color .15s}
+.tab.on{color:#1a6b3c;font-weight:700}
+.tab-ico{font-size:22px}
+
+/* ── Screens ── */
+.scr{display:none;padding:12px 12px 0}
+.scr.on{display:block}
+
+/* ── Store colors & links ── */
+.store-iga{color:#c0392b}
+.store-metro{color:#1565c0}
+.store-superc{color:#e67e22}
+.store-maxi{color:#6a1b9a}
+.store-provigo{color:#2e7d32}
+.store-walmart{color:#0071ce}
+.store-costco{color:#005daa}
+.store-link{text-decoration:none;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:2px;transition:opacity .15s}
+.store-link:hover{opacity:.75;text-decoration:underline}
+.store-ext{font-size:9px;opacity:.6}
+
+/* ── Deal cards ── */
+.deal{background:#fff;border-radius:18px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 20px rgba(0,0,0,.07);transition:transform .12s,box-shadow .12s}
+.deal:active{transform:scale(.98);box-shadow:0 1px 8px rgba(0,0,0,.06)}
+.chk{width:26px;height:26px;border-radius:7px;border:2px solid #c7c7cc;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .15s}
+.chk.on{background:#1a6b3c;border-color:#1a6b3c;color:#fff}
+.d-ico-wrap{width:50px;height:50px;border-radius:14px;background:#f0faf5;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.cat-viande .d-ico-wrap{background:#fff0f0}
+.cat-fruits .d-ico-wrap{background:#fff8f0}
+.cat-laitier .d-ico-wrap{background:#f0f6ff}
+.cat-épicerie .d-ico-wrap{background:#f5f5f7}
+.d-info{flex:1;min-width:0}
+.d-nom{font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.d-right{text-align:right;flex-shrink:0}
+.d-prix{font-size:20px;font-weight:800;color:#1a6b3c;line-height:1.1}
+.d-avant{font-size:11px;color:#aeaeb2;text-decoration:line-through;margin-top:1px}
+.rbadge{display:inline-block;font-size:12px;font-weight:800;padding:3px 9px;border-radius:20px;color:#fff;margin-top:3px}
+.r80{background:#c0392b}.r60{background:#e74c3c}.r40{background:#27ae60}
+.qc-badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:20px;background:#fff3cd;color:#a07800;margin-top:3px;margin-left:4px;border:1px solid #f0c430}
+
+/* ── Recette cards ── */
+.rec{background:#fff;border-radius:13px;overflow:hidden;margin-bottom:10px;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.rec-bandeau{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.rec-nom{font-size:15px;font-weight:700;color:#fff}
+.rec-meta{font-size:11px;color:rgba(255,255,255,.82);margin-top:2px}
+.rec-pp{flex-shrink:0;background:rgba(255,255,255,.22);border-radius:10px;padding:6px 10px;text-align:center;min-width:58px}
+.rec-pp-lbl{font-size:10px;color:rgba(255,255,255,.82)}
+.rec-pp-val{font-size:18px;font-weight:700;color:#fff}
+.rec-body{padding:10px 14px 14px}
+.tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px}
+.tag{font-size:12px;padding:3px 9px;border-radius:12px;font-weight:500}
+.tag.sp{background:#e8f5ee;color:#1a6b3c;border:1px solid #b7dfca}
+.tag.no{background:#f0ece8;color:#8e8e93}
+.rec-chk-row{display:flex;align-items:center;gap:8px;cursor:pointer;padding-top:8px;border-top:1px solid #f0ece8}
+.rec-chk{width:28px;height:28px;border-radius:8px;border:2px solid #d1d1d6;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:all .15s}
+.rec-chk.on{background:#1a6b3c;border-color:#1a6b3c;color:#fff}
+.rec-chk-lbl{font-size:14px;font-weight:500;color:#1c1c1e}
+
+/* ── Allergy warning ── */
+.allergy-warn{background:#fff3f3;border:1.5px solid #ff3b30;border-radius:10px;padding:8px 10px;margin-bottom:8px;font-size:12px;font-weight:600;color:#c0392b;display:flex;align-items:center;gap:6px}
+
+/* ── Personnes ── */
+.pers-card{background:#fff;border-radius:13px;padding:14px 16px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+.pers-lbl{font-size:14px;font-weight:600}
+.pers-ctrl{display:flex;align-items:center;gap:14px}
+.pers-btn{width:36px;height:36px;border-radius:50%;border:2px solid #d1d1d6;background:#fff;font-size:22px;font-weight:500;cursor:pointer;color:#1a6b3c;display:flex;align-items:center;justify-content:center}
+.pers-n{font-size:26px;font-weight:700;min-width:30px;text-align:center;color:#1a6b3c}
+
+/* ── Liste ── */
+.store-grp{margin-bottom:16px}
+.store-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;padding:0 2px}
+.store-lbl{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:#636366}
+.store-tot{font-size:12px;color:#1a6b3c;font-weight:600}
+.li-item{background:#fff;border-radius:10px;padding:11px 14px;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 1px 4px rgba(0,0,0,.07);cursor:pointer}
+.li-left{display:flex;align-items:center;gap:10px}
+.li-chk2{width:22px;height:22px;border-radius:50%;border:2px solid #c7c7cc;flex-shrink:0;transition:all .15s;display:flex;align-items:center;justify-content:center;font-size:12px}
+.li-chk2.done{background:#1a6b3c;border-color:#1a6b3c;color:#fff}
+.li-nom{font-size:13px;font-weight:600}
+.li-qty{font-size:11px;color:#8e8e93}
+.li-px{font-size:13px;font-weight:700;color:#1a6b3c}
+
+/* ── Total box ── */
+.total-box{background:linear-gradient(135deg,#1a6b3c,#27ae60);color:#fff;border-radius:13px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;margin-top:6px;box-shadow:0 4px 16px rgba(26,107,60,.28)}
+.tot-lbl{font-size:13px;opacity:.9}
+.tot-val{font-size:24px;font-weight:700}
+
+/* ── Action buttons ── */
+.action-btns{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.abtn{flex:1;min-width:80px;padding:11px 8px;border:none;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+.abtn.print{background:#1a6b3c;color:#fff}
+.abtn.share{background:#c0392b;color:#fff}
+.abtn.copy{background:#f39c12;color:#fff}
+
+/* ── Empty state ── */
+.empty{text-align:center;padding:48px 20px;color:#8e8e93}
+.empty-ico{font-size:44px;margin-bottom:10px}
+.empty-txt{font-size:15px;font-weight:500}
+.empty-sub{font-size:13px;margin-top:4px;opacity:.7}
+.sel-count{font-size:12px;background:#e8f5ee;color:#1a6b3c;padding:3px 9px;border-radius:10px;font-weight:600;display:inline-block;margin-bottom:10px}
+
+/* ── Allergy Modal ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:300;align-items:flex-end;justify-content:center}
+.modal-overlay.open{display:flex}
+.modal-panel{background:#fff;border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:0 0 40px;box-shadow:0 -4px 20px rgba(0,0,0,.15);max-height:85vh;overflow-y:auto}
+.modal-handle{width:40px;height:4px;background:#d1d1d6;border-radius:4px;margin:12px auto 0}
+.modal-panel-header{background:#1a6b3c;padding:14px 20px 16px;margin-top:12px}
+.modal-title{font-size:18px;font-weight:700;color:#fff}
+.modal-sub{font-size:13px;color:rgba(255,255,255,.82);margin-top:4px}
+.allergy-list-wrap{padding:0 20px}
+.allergy-row{display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid #f5f0eb}
+.allergy-row:last-child{border-bottom:none}
+.allergy-info{display:flex;align-items:center;gap:10px}
+.allergy-ico{font-size:22px;width:28px;text-align:center}
+.allergy-name{font-size:15px;font-weight:500}
+
+/* ── iOS toggle ── */
+.ios-toggle{position:relative;width:51px;height:31px;flex-shrink:0}
+.ios-toggle input{opacity:0;width:0;height:0;position:absolute}
+.ios-toggle-track{position:absolute;inset:0;background:#e5e5ea;border-radius:31px;transition:background .2s;cursor:pointer}
+.ios-toggle input:checked + .ios-toggle-track{background:#1a6b3c}
+.ios-toggle-track::after{content:'';position:absolute;width:27px;height:27px;background:#fff;border-radius:50%;top:2px;left:2px;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.ios-toggle input:checked + .ios-toggle-track::after{transform:translateX(20px)}
+
+/* ── Print ── */
+@media print{
+  nav,header,.action-btns,body{background:#fff!important;max-width:100%!important}
+  body{padding-bottom:0}
+  .scr{display:block!important;padding:0}
+  #scr-speciaux,#scr-recettes,#scr-circ{display:none!important}
+  #scr-liste{display:block!important;padding:8px}
+  .print-header{display:block!important}
+}
+.print-header{display:none;margin-bottom:16px}
+.print-header h2{font-size:18px;font-weight:700}
+.print-header p{font-size:12px;color:#636366}
+</style>
+</head>
+<body>
+
+<button id="pwa-install-btn" style="display:none; position:fixed; bottom:80px; right:16px; background:#1a6b3c; color:white; border:none; border-radius:20px; padding:10px 16px; font-size:14px; cursor:pointer; z-index:1000; box-shadow:0 4px 12px rgba(0,0,0,0.3);">📱 Installer l'app</button>
+
+<!-- Allergy Modal -->
+<div class="modal-overlay" id="allergy-modal" onclick="closeAllergyModal(event)">
+  <div class="modal-panel">
+    <div class="modal-handle"></div>
+    <div class="modal-panel-header">
+      <div class="modal-title">⚙️ Profil allergies</div>
+      <div class="modal-sub">Les recettes avec ces allergènes afficheront un avertissement ⚠️</div>
+    </div>
+    <div class="allergy-list-wrap">
+      <div id="allergy-list"></div>
+    </div>
+  </div>
+</div>
+
+<header>
+  <div class="header-gradient">
+    <div class="header-top">
+      <div>
+        <h1>🍁 Épiquébec</h1>
+        <div class="header-subtitle">Épicerie locale · Semaine du <span id="badge-semaine"></span></div>
+      </div>
+      <div class="header-right">
+        <button class="icon-btn" onclick="openAllergyModal()" title="Profil allergies">⚙️</button>
+      </div>
+    </div>
+  </div>
+  <div class="filter-bar-wrap">
+    <div class="filter-bar" id="filter-bar"></div>
+  </div>
+</header>
+
+<div class="scr on" id="scr-speciaux">
+  <div id="deals-list"></div>
+</div>
+
+<div class="scr" id="scr-recettes">
+  <div id="recettes-list"></div>
+</div>
+
+<div class="scr" id="scr-circ">
+  <div id="circ-list"></div>
+</div>
+
+<div class="scr" id="scr-liste">
+  <div class="print-header">
+    <h2>🍁 Liste d'épicerie — Épiquébec</h2>
+    <p id="print-meta"></p>
+  </div>
+  <div class="pers-card">
+    <span class="pers-lbl">👨‍👩‍👧 Personnes</span>
+    <div class="pers-ctrl">
+      <button class="pers-btn" onclick="chgP(-1)">−</button>
+      <span class="pers-n" id="pers-n">4</span>
+      <button class="pers-btn" onclick="chgP(1)">+</button>
+    </div>
+  </div>
+  <div class="action-btns" id="action-btns" style="display:none">
+    <button class="abtn print" onclick="doPrint()">🖨️ Imprimer</button>
+    <button class="abtn share" onclick="doShare()">📤 Partager</button>
+    <button class="abtn copy" id="copy-btn" onclick="doCopy()">📋 Copier</button>
+  </div>
+  <div id="liste-content"></div>
+</div>
+
+<nav>
+  <div class="tab on" onclick="goTab('speciaux',this)"><span class="tab-ico">🏷️</span>Spéciaux</div>
+  <div class="tab" onclick="goTab('circ',this)"><span class="tab-ico">📰</span>Circulaires</div>
+  <div class="tab" onclick="goTab('recettes',this)"><span class="tab-ico">👨‍🍳</span>Recettes</div>
+  <div class="tab" onclick="goTab('liste',this)"><span class="tab-ico">📋</span>Ma liste</div>
+</nav>
+
+<script>
+const STORE_URLS = {
+  "IGA":     "https://www.iga.net/fr/circulaire",
+  "Metro":   "https://flipp.com/fr-ca/stores/metro",
+  "Super C": "https://www.superc.ca/fr/circulaire",
+  "Maxi":    "https://www.maxi.ca/fr/circulaire",
+  "Provigo": "https://www.provigo.ca/fr/circulaire",
+  "Walmart": "https://www.walmart.ca/fr/flyers",
+  "Costco":  "https://www.costco.ca/weekly-ads.html"
+};
+
+function storeClass(mag){
+  const map={"IGA":"store-iga","Metro":"store-metro","Super C":"store-superc","Maxi":"store-maxi","Provigo":"store-provigo","Walmart":"store-walmart","Costco":"store-costco"};
+  return map[mag]||"";
+}
+
+const APP = {
+  semaine:"27 août – 2 sept 2026",
+  mis_a_jour:"31 août 2026",
+  speciaux:[
+    // ── IGA (27 août – 2 sept 2026, source: circulairesquebec.com) ──
+    {id:1,nom:"Ailes de poulet fraîches Ferme des Voltigeurs",mag:"IGA",px:2.99,av:15.99,fmt:"600 g",rb:81,ico:"🍗",cat:"viande",k:"ailes_poulet_iga"},
+    {id:2,nom:"Jambon fumé Olymel",mag:"IGA",px:3.19,av:17.19,rb:81,ico:"🍖",cat:"viande",k:"jambon_olymel",qc:true},
+    {id:3,nom:"Bœuf haché extra maigre",mag:"IGA",px:9.49,av:22.99,rb:59,ico:"🥩",cat:"viande",k:"boeuf_hache_iga"},
+    {id:4,nom:"Substitut de repas Boost Enfants",mag:"IGA",px:8.99,av:16.99,fmt:"6 x 237 mL",rb:47,ico:"🧃",cat:"epicerie",k:"boost_enfants"},
+    // ── Metro ──
+    {id:5,nom:"Côtelettes de porc fraîches désossées",mag:"Metro",px:2.77,av:4.29,u:"/lb",rb:35,ico:"🥩",cat:"viande",k:"cotelettes_metro"},
+    {id:6,nom:"Pâté au poulet Plaisirs Gastronomiques",mag:"Metro",px:5.99,av:13.99,fmt:"715-850 g",rb:57,ico:"🥧",cat:"epicerie",k:"pate_poulet"},
+    {id:7,nom:"Raisins rouges, verts ou noirs sans pépins",mag:"Metro",px:2.44,av:4.49,u:"/lb",rb:46,ico:"🍇",cat:"fruits",k:"raisins_metro"},
+    {id:8,nom:"Biscuits Célébration Leclerc",mag:"Metro",px:2.49,av:4.99,fmt:"200-350 g",rb:50,ico:"🍪",cat:"epicerie",k:"biscuits_leclerc",qc:true},
+    {id:9,nom:"Pains à hot-dog ou hamburger Pom",mag:"Metro",px:2.66,av:4.99,fmt:"4-8 un.",rb:47,ico:"🍞",cat:"epicerie",k:"pains_pom",qc:true},
+    // ── Super C ──
+    {id:10,nom:"Framboises ou mûres",mag:"Super C",px:1.44,av:4.99,fmt:"170 g",rb:71,ico:"🫐",cat:"fruits",k:"framboises_sc"},
+    {id:11,nom:"Pommes de terre blanches ou à chair jaune",mag:"Super C",px:1.97,av:5.00,fmt:"10 lb",rb:61,ico:"🥔",cat:"legumes",k:"patates_sc"},
+    {id:12,nom:"Poivrons verts",mag:"Super C",px:0.88,av:1.99,u:"/lb",rb:56,ico:"🫑",cat:"legumes",k:"poivrons_sc"},
+    {id:13,nom:"Laitue Iceberg",mag:"Super C",px:0.88,av:1.99,rb:56,ico:"🥬",cat:"legumes",k:"laitue_sc"},
+    {id:14,nom:"Chou-fleur",mag:"Super C",px:1.77,av:3.99,rb:56,ico:"🥦",cat:"legumes",k:"choufleur_sc"},
+    // ── Maxi ──
+    {id:15,nom:"Soupe Aylmer",mag:"Maxi",px:0.75,av:1.39,fmt:"284 mL",rb:46,ico:"🥫",cat:"epicerie",k:"soupe_aylmer"},
+    {id:16,nom:"Petits gâteaux Vachon",mag:"Maxi",px:2.68,av:4.98,fmt:"250-311 g",rb:46,ico:"🧁",cat:"epicerie",k:"gateaux_vachon_maxi",qc:true},
+    {id:17,nom:"Biscuits Dare, Normandie, Météo ou Maxi Fruits",mag:"Maxi",px:2.22,av:3.79,fmt:"280 g",rb:41,ico:"🍪",cat:"epicerie",k:"biscuits_dare_maxi"},
+    // ── Walmart ──
+    {id:18,nom:"Lait au chocolat Beatrice 1%",mag:"Walmart",px:0.98,av:2.98,fmt:"750 mL",rb:67,ico:"🥛",cat:"laitier",k:"lait_choc_beatrice"},
+    {id:19,nom:"Lait au chocolat Québon",mag:"Walmart",px:1.47,av:2.98,rb:51,ico:"🥛",cat:"laitier",k:"lait_choc_quebon",qc:true},
+    {id:20,nom:"Lait au chocolat Sealtest",mag:"Walmart",px:0.98,av:1.93,rb:49,ico:"🥛",cat:"laitier",k:"lait_choc_sealtest"},
+    // ── Provigo / Costco : aucun spécial vérifiable cette semaine (sites JS/bloqués, absent de l'agrégateur circulairesquebec.com) ──
+  ],
+  recettes:[
+    {id:1,nom:"Rôti de porc braisé aux légumes",ico:"🥩",t:"2h",p:6,px:6.50,sp:["roti_porc","patates","tomates"],
+      ing:[{n:"Rôti d'épaule de porc",k:"roti_porc",m:"Metro",q:2,u:"lb",pu:1.99,s:true},
+           {n:"Pommes de terre",k:"patates",m:"Super C",q:1,u:"portion",pu:0.50,s:true},
+           {n:"Tomates Roma",k:"tomates",m:"Metro",q:1,u:"lb",pu:0.75,s:true},
+           {n:"Bouillon + épices",k:null,m:"Épicerie",q:1,u:"",pu:2.50,s:false}]},
+    {id:2,nom:"Bifteck grilleté et tomates rôties",ico:"🥩",t:"30 min",p:4,px:8.00,sp:["bifteck","tomates"],
+      ing:[{n:"Bifteck haut de surlonge",k:"bifteck",m:"IGA",q:1,u:"lb",pu:9.88,s:true},
+           {n:"Tomates Roma",k:"tomates",m:"Metro",q:1.5,u:"lb",pu:0.75,s:true},
+           {n:"Ail + huile + épices",k:null,m:"Épicerie",q:1,u:"",pu:1.50,s:false}]},
+    {id:3,nom:"Saumon grilleté à la tomate",ico:"🐟",t:"25 min",p:4,px:7.50,sp:["saumon","tomates"],
+      ing:[{n:"Saumon atlantique frais",k:"saumon",m:"IGA",q:1.5,u:"lb",pu:8.96,s:true},
+           {n:"Tomates Roma",k:"tomates",m:"Metro",q:1,u:"lb",pu:0.75,s:true},
+           {n:"Citron + aneth + huile",k:null,m:"Épicerie",q:1,u:"",pu:2.00,s:false}]},
+    {id:4,nom:"Côtelettes de porc et maïs du Québec",ico:"🌽",t:"35 min",p:4,px:6.00,sp:["cotelettes","mais_maxi"],
+      ing:[{n:"Côtelettes de porc désossées",k:"cotelettes",m:"Metro",q:1.5,u:"lb",pu:2.77,s:true},
+           {n:"Maïs du Québec",k:"mais_maxi",m:"Maxi",q:4,u:"épis",pu:0.40,s:true,qc:true},
+           {n:"Beurre + herbes de Provence",k:null,m:"Épicerie",q:1,u:"",pu:1.50,s:false,al:["lactose"]}]},
+    {id:5,nom:"Poulet BBQ et chou-fleur rôti",ico:"🍗",t:"50 min",p:4,px:7.00,sp:["poulet","brocoli"],
+      ing:[{n:"Ailes de poulet fraîches",k:"poulet",m:"Provigo",q:2,u:"lb",pu:4.99,s:true},
+           {n:"Chou-fleur ou brocoli",k:"brocoli",m:"Walmart",q:1,u:"unité",pu:2.94,s:true},
+           {n:"Sauce BBQ + épices",k:null,m:"Épicerie",q:1,u:"",pu:2.49,s:false}]},
+    {id:6,nom:"Soupe de veau aux pommes de terre",ico:"🍲",t:"60 min",p:6,px:5.50,sp:["veau","patates","tomates"],
+      ing:[{n:"Veau haché",k:"veau",m:"Super C",q:1,u:"lb",pu:4.95,s:true},
+           {n:"Pommes de terre",k:"patates",m:"Super C",q:1,u:"portion",pu:0.50,s:true},
+           {n:"Tomates Roma",k:"tomates",m:"Metro",q:1,u:"lb",pu:0.75,s:true},
+           {n:"Bouillon de bœuf + épices",k:null,m:"Épicerie",q:1,u:"",pu:2.49,s:false}]},
+    {id:7,nom:"Salade de fruits d'été",ico:"🍓",t:"10 min",p:4,px:4.50,sp:["framboises","raisins","peches","bleuets","melon"],
+      ing:[{n:"Framboises fraîches",k:"framboises",m:"Super C",q:2,u:"170g",pu:1.44,s:true},
+           {n:"Raisins verts sans pépins",k:"raisins",m:"IGA",q:1,u:"lb",pu:1.67,s:true},
+           {n:"Pêches jaunes",k:"peches",m:"Maxi",q:0.5,u:"portion",pu:2.12,s:true},
+           {n:"Bleuets du Québec",k:"bleuets",m:"Costco",q:0.5,u:"lb",pu:3.50,s:true,qc:true}]},
+    {id:8,nom:"Omelette au fromage",ico:"🍳",t:"15 min",p:4,px:3.50,sp:["oeufs","fromage"],
+      ing:[{n:"Gros œufs blancs",k:"oeufs",m:"Maxi",q:6,u:"œufs",pu:0.25,s:true},
+           {n:"Fromage Black Diamond",k:"fromage",m:"Metro",q:1,u:"portion",pu:1.50,s:true,al:["lactose"]},
+           {n:"Beurre + sel + poivre",k:null,m:"Épicerie",q:1,u:"",pu:0.50,s:false,al:["lactose"]}]},
+    {id:9,nom:"Côtes de porc marinées",ico:"🍖",t:"2h30",p:4,px:7.00,sp:["cotes_porc","mais"],
+      ing:[{n:"Côtes de porc",k:"cotes_porc",m:"Provigo",q:2,u:"lb",pu:3.50,s:true},
+           {n:"Maïs du Québec",k:"mais",m:"IGA",q:1,u:"portion",pu:0.75,s:true,qc:true},
+           {n:"Miel + sauce soya + ail",k:null,m:"Épicerie",q:1,u:"",pu:2.50,s:false,al:["soya"]}]},
+    {id:10,nom:"Poitrines de poulet farcie au fromage",ico:"🍗",t:"45 min",p:4,px:8.50,sp:["poitrine_poulet","fromage"],
+      ing:[{n:"Poitrines de poulet désossées",k:"poitrine_poulet",m:"IGA",q:2,u:"lb",pu:6.77,s:true},
+           {n:"Fromage Black Diamond",k:"fromage",m:"Metro",q:1,u:"portion",pu:2.50,s:true,al:["lactose"]},
+           {n:"Herbes + ail + huile",k:null,m:"Épicerie",q:1,u:"",pu:1.50,s:false}]},
+    {id:11,nom:"Burger de bœuf haché maison",ico:"🍔",t:"25 min",p:4,px:6.50,sp:["boeuf_hache","fromage","oeufs"],
+      ing:[{n:"Bœuf haché maigre",k:"boeuf_hache",m:"Maxi",q:1,u:"lb",pu:5.75,s:true},
+           {n:"Fromage Black Diamond",k:"fromage",m:"Metro",q:1,u:"portion",pu:1.25,s:true,al:["lactose"]},
+           {n:"Gros œufs blancs",k:"oeufs",m:"Maxi",q:2,u:"œufs",pu:0.25,s:true},
+           {n:"Pains à burger + condiments",k:null,m:"Épicerie",q:1,u:"",pu:3.49,s:false,al:["gluten"]}]},
+    {id:12,nom:"Rôti de porc picnic aux légumes",ico:"🥩",t:"2h",p:6,px:5.50,sp:["roti_picnic","brocoli","patates"],
+      ing:[{n:"Rôti de porc picnic",k:"roti_picnic",m:"Walmart",q:2,u:"lb",pu:2.48,s:true},
+           {n:"Chou-fleur ou brocoli",k:"brocoli",m:"Walmart",q:1,u:"unité",pu:2.94,s:true},
+           {n:"Pommes de terre",k:"patates",m:"Super C",q:1,u:"portion",pu:0.50,s:true},
+           {n:"Bouillon + épices",k:null,m:"Épicerie",q:1,u:"",pu:2.00,s:false}]},
+    {id:13,nom:"Salade de framboises au melon",ico:"🍉",t:"10 min",p:4,px:3.50,sp:["framboises","melon"],
+      ing:[{n:"Framboises fraîches",k:"framboises",m:"Super C",q:2,u:"170g",pu:1.44,s:true},
+           {n:"Melon d'eau sans pépins",k:"melon",m:"Provigo",q:0.5,u:"",pu:2.00,s:true},
+           {n:"Menthe + citron",k:null,m:"Épicerie",q:1,u:"",pu:0.75,s:false}]},
+    {id:14,nom:"Soupe à la tomate maison",ico:"🍵",t:"40 min",p:6,px:3.20,sp:["tomates","oeufs"],
+      ing:[{n:"Tomates Roma",k:"tomates",m:"Metro",q:3,u:"lb",pu:0.75,s:true},
+           {n:"Gros œufs blancs",k:"oeufs",m:"Maxi",q:2,u:"œufs",pu:0.25,s:true},
+           {n:"Bouillon + oignon + herbes",k:null,m:"Épicerie",q:1,u:"",pu:2.49,s:false}]},
+    {id:15,nom:"Longe de porc et cheddar gratiné",ico:"🧀",t:"50 min",p:4,px:7.50,sp:["longe_porc","cheddar"],
+      ing:[{n:"Côtelettes de longe de porc",k:"longe_porc",m:"Costco",q:1.5,u:"lb",pu:2.79,s:true},
+           {n:"Cheddar fort",k:"cheddar",m:"Costco",q:1,u:"portion",pu:2.00,s:true,al:["lactose"]},
+           {n:"Moutarde + herbes + ail",k:null,m:"Épicerie",q:1,u:"",pu:1.50,s:false}]},
+  ]
+};
+
+// ── Allergies ─────────────────────────────────────────
+const ALLERGENES = [
+  {id:"gluten",nom:"Gluten",ico:"🌾"},
+  {id:"lactose",nom:"Lactose",ico:"🥛"},
+  {id:"noix",nom:"Noix",ico:"🌰"},
+  {id:"arachides",nom:"Arachides",ico:"🥜"},
+  {id:"oeufs",nom:"Œufs",ico:"🥚"},
+  {id:"soya",nom:"Soya",ico:"🫘"},
+  {id:"fruits_mer",nom:"Fruits de mer",ico:"🦐"},
+];
+
+let allergies = {};
+try { allergies = JSON.parse(localStorage.getItem("allergies_profil")||"{}"); } catch(e){}
+
+function saveAllergies(){
+  try { localStorage.setItem("allergies_profil", JSON.stringify(allergies)); } catch(e){}
+}
+
+function openAllergyModal(){
+  document.getElementById("allergy-list").innerHTML = ALLERGENES.map(a=>`
+    <div class="allergy-row">
+      <div class="allergy-info">
+        <span class="allergy-ico">${a.ico}</span>
+        <span class="allergy-name">${a.nom}</span>
+      </div>
+      <label class="ios-toggle">
+        <input type="checkbox" ${allergies[a.id]?'checked':''} onchange="toggleAllergie('${a.id}',this.checked)">
+        <div class="ios-toggle-track"></div>
+      </label>
+    </div>`).join("");
+  document.getElementById("allergy-modal").classList.add("open");
+}
+
+function closeAllergyModal(e){
+  if(e.target===document.getElementById("allergy-modal")){
+    document.getElementById("allergy-modal").classList.remove("open");
+    renderRecettes();
+  }
+}
+
+function toggleAllergie(id, val){
+  allergies[id] = val;
+  saveAllergies();
+}
+
+function hasAllergyConflict(rec){
+  const actifs = Object.entries(allergies).filter(([,v])=>v).map(([k])=>k);
+  if(!actifs.length) return [];
+  const conflicts = new Set();
+  rec.ing.forEach(i=>{
+    if(i.al) i.al.forEach(a=>{
+      if(actifs.includes(a)){
+        const match = ALLERGENES.find(x=>x.id===a);
+        conflicts.add(match ? match.nom : a);
+      }
+    });
+  });
+  return [...conflicts];
+}
+
+let selSp = new Set(), selRec = new Set(), doneItems = new Set();
+let persons = 4, activeF = "Tous", filterQC = false;
+
+const FILTERS = ["Tous","Viande","Légumes","Fruits","Laitier","Épicerie"];
+const CAT = {viande:"Viande",legumes:"Légumes",fruits:"Fruits",laitier:"Laitier",epicerie:"Épicerie"};
+
+function pf(s){
+  let t = "$"+s.px.toFixed(2);
+  if(s.u) t += " "+s.u;
+  if(s.fmt) t += " / "+s.fmt;
+  return t;
+}
+
+function rbClass(r){ return r>=70?"r80":r>=50?"r60":"r40"; }
+
+function recBandeau(ico){
+  const soupe=['🍲','🍵','🍜'];
+  const viande=['🥩','🍗','🍖','🌭','🐟'];
+  const grain=['🍝','🥪','🍕','🍛'];
+  const dessert=['🍓','🍹','🥧'];
+  const legumes=['🥦','🥬','🫘','🍢'];
+  if(soupe.some(e=>ico.includes(e))) return '#2471a3';
+  if(viande.some(e=>ico.includes(e))) return '#922b21';
+  if(grain.some(e=>ico.includes(e))) return '#b7770d';
+  if(dessert.some(e=>ico.includes(e))) return '#7d3c98';
+  if(legumes.some(e=>ico.includes(e))) return '#1e8449';
+  return '#1a6b3c';
+}
+
+// ── Spéciaux ────────────────────────────────────────
+function renderFilters(){
+  const catBtns = FILTERS.map(f=>
+    `<button class="fbtn ${f===activeF&&!filterQC?'on':''}" onclick="setF('${f}')">${f}</button>`
+  ).join("");
+  const qcBtn = `<button class="fbtn qc-btn ${filterQC?'on':''}" onclick="toggleQC()">🍁 Québec</button>`;
+  document.getElementById("filter-bar").innerHTML = catBtns + qcBtn;
+}
+
+function setF(f){ activeF=f; filterQC=false; renderFilters(); renderDeals(); }
+function toggleQC(){ filterQC=!filterQC; if(filterQC) activeF="Tous"; renderFilters(); renderDeals(); }
+
+function storeLink(mag, fmt){
+  const url = STORE_URLS[mag];
+  const cls = storeClass(mag);
+  const label = mag + (fmt ? ' · '+fmt : '');
+  if(url){
+    return `<a href="${url}" target="_blank" rel="noopener" class="store-link ${cls}">${label}<span class="store-ext"> ↗</span></a>`;
+  }
+  return `<span class="${cls}">${label}</span>`;
+}
+
+function renderDeals(){
+  let list = APP.speciaux;
+  if(filterQC) list = list.filter(d=>d.qc);
+  else if(activeF!=="Tous") list = list.filter(d=>CAT[d.cat]===activeF);
+  document.getElementById("deals-list").innerHTML = list.map(d=>`
+    <div class="deal cat-${d.cat}" style="cursor:pointer" onclick="if(event.target.closest('.chk')){return;} showDeal(${d.id})">
+      <div class="chk ${selSp.has(d.id)?'on':''}" onclick="togSp(${d.id})">${selSp.has(d.id)?'✓':''}</div>
+      <div class="d-ico-wrap">${d.ico}</div>
+      <div class="d-info">
+        <div class="d-nom">${d.nom}</div>
+        <div class="d-store">${storeLink(d.mag, d.fmt)}</div>
+      </div>
+      <div class="d-right">
+        <div class="d-prix">${pf(d)}</div>
+        ${d.av?`<div class="d-avant">$${d.av.toFixed(2)}</div>`:''}
+        <span class="rbadge ${rbClass(d.rb)}">-${d.rb}%</span>
+        ${d.qc?`<span class="qc-badge">🍁 QC</span>`:''}
+      </div>
+    </div>`).join("");
+}
+
+function togSp(id){
+  selSp.has(id)?selSp.delete(id):selSp.add(id);
+  renderDeals(); renderRecettes();
+}
+
+// ── Recettes ─────────────────────────────────────────
+function renderRecettes(){
+  const selKeys = new Set(APP.speciaux.filter(s=>selSp.has(s.id)).map(s=>s.k));
+  let recs = [...APP.recettes];
+  if(selKeys.size>0){
+    recs.sort((a,b)=>{
+      return b.sp.filter(k=>selKeys.has(k)).length - a.sp.filter(k=>selKeys.has(k)).length;
+    });
+  }
+  const added = selRec.size;
+  document.getElementById("recettes-list").innerHTML =
+    (added>0?`<div class="sel-count">✅ ${added} recette${added>1?'s':''} dans ma liste</div>`:'') +
+    recs.map(r=>{
+      const on = selRec.has(r.id);
+      const pp = (r.px/r.p).toFixed(2);
+      const matchKeys = r.sp.filter(k=>selKeys.has(k));
+      const allergyConflicts = hasAllergyConflict(r);
+      const color = recBandeau(r.ico);
+      return `<div class="rec">
+        <div class="rec-bandeau" style="background:${color}">
+          <div style="flex:1;min-width:0">
+            <div class="rec-nom">${r.ico} ${r.nom}</div>
+            <div class="rec-meta">⏱ ${r.t} · ${r.p} portions de base</div>
+          </div>
+          <div class="rec-pp">
+            <div class="rec-pp-lbl">par portion</div>
+            <div class="rec-pp-val">$${pp}</div>
+          </div>
+        </div>
+        <div class="rec-body">
+          ${allergyConflicts.length?`<div class="allergy-warn">⚠️ Contient: ${allergyConflicts.join(", ")}</div>`:''}
+          <div class="tags">${r.ing.map(i=>`<span class="tag ${i.s&&(selKeys.size===0||matchKeys.includes(i.k))?'sp':'no'}">${i.n}${i.qc?' 🍁':''}</span>`).join("")}</div>
+          <div class="rec-chk-row" onclick="togRec(${r.id})">
+            <div class="rec-chk ${on?'on':''}">${on?'✓':''}</div>
+            <div class="rec-chk-lbl">${on?'✅ Ajoutée à ma liste':'Ajouter à ma liste'}</div>
+          </div>
+        </div>
+      </div>`;
+    }).join("");
+}
+
+function togRec(id){
+  selRec.has(id)?selRec.delete(id):selRec.add(id);
+  renderRecettes(); renderListe();
+}
+
+// ── Liste ─────────────────────────────────────────────
+function chgP(d){
+  persons = Math.max(1,Math.min(12,persons+d));
+  document.getElementById("pers-n").textContent=persons;
+  renderListe();
+}
+
+function buildListeText(){
+  const recs = APP.recettes.filter(r=>selRec.has(r.id));
+  const byMag = {};
+  recs.forEach(r=>{
+    const ratio=persons/r.p;
+    r.ing.forEach(ing=>{
+      const m=ing.m;
+      if(!byMag[m]) byMag[m]=[];
+      const ex=byMag[m].find(x=>x.nom===ing.n);
+      if(ex){ex.qt+=ing.q*ratio;ex.pxt+=ing.pu*ing.q*ratio;}
+      else byMag[m].push({nom:ing.n,qt:ing.q*ratio,u:ing.u,pxt:ing.pu*ing.q*ratio,s:ing.s});
+    });
+  });
+  let body=`LISTE D'ÉPICERIE — ÉPIQUÉBEC\nSemaine du ${APP.semaine} · ${persons} personne${persons>1?'s':''} · ${recs.length} recette${recs.length>1?'s':''}\n\n`;
+  let total=0;
+  Object.entries(byMag).forEach(([mag,items])=>{
+    const st=items.reduce((s,i)=>s+i.pxt,0); total+=st;
+    body+=`== ${mag.toUpperCase()} (~$${st.toFixed(2)}) ==\n`;
+    items.forEach(i=>{
+      const q=(i.qt.toFixed(1)).replace(/\.0$/,'');
+      body+=`  • ${i.nom} — ${q} ${i.u||''} ~$${i.pxt.toFixed(2)}${i.s?' [SPÉCIAL]':''}\n`;
+    });
+    body+="\n";
+  });
+  body+=`TOTAL ESTIMÉ: $${total.toFixed(2)}\n\n`;
+  body+=`RECETTES:\n`;
+  recs.forEach(r=>{
+    const pp=(r.px/r.p).toFixed(2);
+    body+=`• ${r.nom} (${r.t}, ~$${pp}/portion)\n`;
+  });
+  body+=`\nGénéré par Épiquébec — ${new Date().toLocaleDateString('fr-CA')}`;
+  return body;
+}
+
+function renderListe(){
+  const btn = document.getElementById("action-btns");
+  if(selRec.size===0){
+    btn.style.display="none";
+    document.getElementById("liste-content").innerHTML=
+      `<div class="empty"><div class="empty-ico">📋</div><div class="empty-txt">Aucune recette choisie</div><div class="empty-sub">Allez dans «&nbsp;Recettes&nbsp;» et cochez vos recettes</div></div>`;
+    return;
+  }
+  btn.style.display="flex";
+
+  const recs = APP.recettes.filter(r=>selRec.has(r.id));
+  const byMag = {};
+
+  recs.forEach(r=>{
+    const ratio = persons/r.p;
+    r.ing.forEach(ing=>{
+      const m = ing.m;
+      if(!byMag[m]) byMag[m]=[];
+      const ex = byMag[m].find(x=>x.nom===ing.n);
+      if(ex){ ex.qt+=ing.q*ratio; ex.pxt+=ing.pu*ing.q*ratio; }
+      else byMag[m].push({nom:ing.n,qt:ing.q*ratio,u:ing.u,pxt:ing.pu*ing.q*ratio,s:ing.s,id:m+ing.n});
+    });
+  });
+
+  let total=0,html="";
+  Object.entries(byMag).forEach(([mag,items])=>{
+    const st = items.reduce((s,i)=>s+i.pxt,0);
+    total+=st;
+    html+=`<div class="store-grp">
+      <div class="store-hdr">
+        ${STORE_URLS[mag]?`<a href="${STORE_URLS[mag]}" target="_blank" rel="noopener" class="store-lbl" style="color:#636366;text-decoration:none">${mag}<span style="font-size:9px;opacity:.6"> ↗</span></a>`:`<span class="store-lbl">${mag}</span>`}
+        <span class="store-tot">~$${st.toFixed(2)}</span>
+      </div>
+      ${items.map(item=>{
+        const done=doneItems.has(item.id);
+        const qty=(item.qt.toFixed(1)).replace(/\.0$/,'');
+        return `<div class="li-item" onclick="togItem('${item.id}',this)" style="${done?'opacity:.4':''}">
+          <div class="li-left">
+            <div class="li-chk2 ${done?'done':''}">${done?'✓':''}</div>
+            <div>
+              <div class="li-nom">${item.nom}</div>
+              <div class="li-qty">${qty} ${item.u||''} ${item.s&&STORE_URLS[mag]?`<a href="${STORE_URLS[mag]}" target="_blank" rel="noopener" style="color:#1a6b3c;text-decoration:none;font-size:11px">🏷️ En spécial ↗</a>`:item.s?'🏷️ En spécial':''}</div>
+            </div>
+          </div>
+          <div class="li-px">~$${item.pxt.toFixed(2)}</div>
+        </div>`;
+      }).join("")}
+    </div>`;
+  });
+
+  html+=`<div class="total-box">
+    <div><div class="tot-lbl">Estimation totale</div><div style="font-size:11px;opacity:.75">${persons} personne${persons>1?'s':''} · ${selRec.size} recette${selRec.size>1?'s':''}</div></div>
+    <div class="tot-val">$${total.toFixed(2)}</div>
+  </div>`;
+
+  document.getElementById("liste-content").innerHTML=html;
+  document.getElementById("print-meta").textContent=
+    `Semaine du ${APP.semaine} · ${persons} personne${persons>1?'s':''} · ${selRec.size} recette${selRec.size>1?'s':''}`;
+}
+
+function togItem(id,row){
+  doneItems.has(id)?doneItems.delete(id):doneItems.add(id);
+  renderListe();
+}
+
+// ── Actions ─────────────────────────────────────────
+function doPrint(){ window.print(); }
+
+function doShare(){
+  const text = buildListeText();
+  if(navigator.share){
+    navigator.share({
+      title: `Liste d'épicerie — Épiquébec`,
+      text: text
+    }).catch(()=>{});
+  } else {
+    window.open("https://wa.me/?text="+encodeURIComponent(text), "_blank");
+  }
+}
+
+function doCopy(){
+  const text = buildListeText();
+  const btn = document.getElementById("copy-btn");
+  const reset = ()=>{ btn.textContent="📋 Copier"; btn.style.background=""; };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{
+      btn.textContent="✓ Copié!"; btn.style.background="#27ae60";
+      setTimeout(reset, 2000);
+    }).catch(()=>{ fallbackCopy(text,btn,reset); });
+  } else {
+    fallbackCopy(text,btn,reset);
+  }
+}
+
+function fallbackCopy(text,btn,reset){
+  const ta = document.createElement("textarea");
+  ta.value=text; ta.style.position="fixed"; ta.style.opacity="0";
+  document.body.appendChild(ta); ta.select();
+  document.execCommand("copy"); document.body.removeChild(ta);
+  btn.textContent="✓ Copié!"; btn.style.background="#27ae60";
+  setTimeout(reset, 2000);
+}
+
+// ── Circulaires par magasin ───────────────────────────
+function renderCirc(){
+  const stores = [...new Set(APP.speciaux.map(d=>d.mag))];
+  const storeColors = {
+    "IGA":"#e8f5e9","Metro":"#e3f2fd","Super C":"#fff3e0",
+    "Maxi":"#fce4ec","Walmart":"#e8eaf6","Costco":"#fff8e1","Provigo":"#e0f2f1"
+  };
+  const storeIcos = {
+    "IGA":"🍀","Metro":"🏙️","Super C":"🛒","Maxi":"🟡","Walmart":"⭐","Costco":"🏭","Provigo":"🏪"
+  };
+  let html = `<div style="padding:12px 16px 6px;font-size:13px;color:#888">Semaine du ${APP.semaine}</div>`;
+  stores.forEach(mag=>{
+    const deals = APP.speciaux.filter(d=>d.mag===mag);
+    const bg = storeColors[mag]||"#f5f5f7";
+    const ico = storeIcos[mag]||"🏪";
+    const url = STORE_URLS[mag];
+    html += `<div style="margin:10px 12px;border-radius:18px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.07)">
+      <div style="background:${bg};padding:14px 16px;display:flex;align-items:center;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:28px">${ico}</span>
+          <div>
+            <div style="font-size:18px;font-weight:800;color:#1c1c1e">${mag}</div>
+            <div style="font-size:12px;color:#636366">${deals.length} spécial${deals.length>1?'s':''}</div>
+          </div>
+        </div>
+        ${url?`<a href="${url}" target="_blank" rel="noopener" style="font-size:12px;font-weight:700;color:#1a6b3c;text-decoration:none;background:#fff;padding:6px 12px;border-radius:20px;border:1.5px solid #1a6b3c">Circulaire ↗</a>`:''}
+      </div>
+      <div style="background:#fff;padding:8px 0">
+        ${deals.map(d=>{
+          const inList = selSp.has(d.id);
+          return `<div onclick="showDeal(${d.id})" style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid #f2f2f7;cursor:pointer;active:background:#f5f5f7">
+            <div style="width:42px;height:42px;border-radius:12px;background:${bg};display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">${d.ico}</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${d.nom}</div>
+              <div style="font-size:12px;color:#888;margin-top:2px">${d.fmt||d.u||''} ${d.qc?'🍁':''}</div>
+            </div>
+            <div style="text-align:right;flex-shrink:0">
+              <div style="font-size:17px;font-weight:800;color:#1a6b3c">$${d.px.toFixed(2)}</div>
+              <span style="font-size:11px;font-weight:800;padding:2px 7px;border-radius:12px;color:#fff;background:${d.rb>=60?'#c0392b':d.rb>=40?'#e74c3c':'#27ae60'}">-${d.rb}%</span>
+              ${inList?`<div style="font-size:10px;color:#1a6b3c;font-weight:700;margin-top:2px">✓ Ma liste</div>`:''}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  });
+  document.getElementById("circ-list").innerHTML = html;
+}
+
+// ── Navigation ───────────────────────────────────────
+function goTab(name,el){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.remove("on"));
+  el.classList.add("on");
+  document.querySelectorAll(".scr").forEach(s=>s.classList.remove("on"));
+  document.getElementById("scr-"+name).classList.add("on");
+  document.querySelector(".filter-bar-wrap").style.display=name==="speciaux"?"block":"none";
+  if(name==="circ") renderCirc();
+  window.scrollTo(0,0);
+}
+
+// PWA Install
+let deferredPrompt;
+const installBtn = document.getElementById('pwa-install-btn');
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (installBtn) installBtn.style.display = 'block';
+});
+if (installBtn) {
+  installBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      installBtn.style.display = 'none';
+    }
+  });
+}
+window.addEventListener('appinstalled', () => {
+  if (installBtn) installBtn.style.display = 'none';
+  deferredPrompt = null;
+});
+
+// Service Worker inline pour mode hors-ligne
+if ('serviceWorker' in navigator) {
+  const swCode = `
+    const CACHE = 'epiquebec-v1';
+    self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.add('/'))));
+    self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request).catch(() => caches.match('/')))));
+  `;
+  const blob = new Blob([swCode], {type: 'application/javascript'});
+  const swUrl = URL.createObjectURL(blob);
+  navigator.serviceWorker.register(swUrl).catch(()=>{});
+}
+
+// Init
+document.getElementById("badge-semaine").textContent=APP.semaine;
+renderFilters();
+renderDeals();
+renderRecettes();
+renderListe();
+
+
+function showDeal(id){
+  const d = APP.speciaux.find(x=>x.id===id); if(!d) return;
+  const imgEl = document.getElementById('dm-img');
+  if(d.img){ imgEl.src=d.img; imgEl.style.display='block'; document.getElementById('dm-ico').style.display='none'; }
+  else { imgEl.style.display='none'; imgEl.src=''; document.getElementById('dm-ico').style.display='block'; }
+  document.getElementById('dm-ico').textContent = d.ico||'';
+  document.getElementById('dm-nom').textContent = d.nom;
+  document.getElementById('dm-mag').textContent = d.mag;
+  document.getElementById('dm-prix').textContent = '$'+d.px.toFixed(2);
+  document.getElementById('dm-unit').textContent = d.fmt||'';
+  document.getElementById('dm-avant').textContent = d.av ? '$'+d.av.toFixed(2) : '';
+  document.getElementById('dm-rb').textContent = '-'+d.rb+'%';
+  const sav = d.av ? (d.av-d.px).toFixed(2) : null;
+  document.getElementById('dm-savings').textContent = sav ? 'Économie: $'+sav : '';
+  const qcEl = document.getElementById('dm-qc');
+  qcEl.style.display = d.qc ? 'block' : 'none';
+  const circ = document.getElementById('dm-circulaire');
+  const url = STORE_URLS[d.mag];
+  if(url){ circ.href=url; circ.style.display='block'; }
+  else { circ.style.display='none'; }
+  document.getElementById('deal-modal').classList.add('open');
+}
+function closeDealModal(){
+  document.getElementById('deal-modal').classList.remove('open');
+}
+</script>
+
+<div class="modal-overlay" id="deal-modal" onclick="if(event.target===this)closeDealModal()" style="align-items:center;justify-content:center">
+  <div class="modal-panel" style="border-radius:20px;max-width:380px;width:90%;padding:0 0 32px">
+    <div class="modal-handle"></div>
+    <div id="dm-store-bar" class="modal-panel-header" style="text-align:center">
+      <img id="dm-img" style="display:none;width:100%;max-height:180px;object-fit:contain;border-radius:10px;margin-bottom:8px" />
+      <div id="dm-ico" style="font-size:48px;margin-bottom:4px"></div>
+      <div id="dm-nom" class="modal-title" style="font-size:20px"></div>
+      <div id="dm-mag" class="modal-sub"></div>
+    </div>
+    <div style="padding:24px 24px 0;text-align:center">
+      <div id="dm-prix" style="font-size:52px;font-weight:800;color:#1a6b3c;line-height:1"></div>
+      <div id="dm-unit" style="font-size:14px;color:#888;margin-top:2px"></div>
+      <div style="margin-top:12px;display:flex;align-items:center;justify-content:center;gap:12px">
+        <div id="dm-avant" style="font-size:18px;color:#aaa;text-decoration:line-through"></div>
+        <div id="dm-rb" style="font-size:22px;font-weight:800;color:#e53935;background:#fce8e8;padding:4px 12px;border-radius:20px"></div>
+        <div id="dm-savings" style="font-size:14px;color:#e53935;font-weight:600"></div>
+      </div>
+      <div id="dm-qc" style="margin-top:10px;font-size:15px;color:#1a6b3c;display:none">🍁 Produit québécois</div>
+      <div style="margin-top:20px;padding:12px 16px;background:#f5f5f7;border-radius:12px;font-size:13px;color:#555">
+        Montrez cet écran à la caisse pour valider le prix spécial
+      </div>
+      <a id="dm-circulaire" target="_blank" rel="noopener" style="display:none;margin-top:12px;width:100%;padding:13px;background:#fff;color:#1a6b3c;border:2px solid #1a6b3c;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;text-decoration:none;text-align:center;box-sizing:border-box">
+        📄 Voir la circulaire
+      </a>
+      <button onclick="closeDealModal()" style="margin-top:10px;width:100%;padding:14px;background:#1a6b3c;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer">Fermer</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>

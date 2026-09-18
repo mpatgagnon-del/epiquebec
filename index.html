@@ -258,35 +258,35 @@ function storeClass(mag){
 }
 
 const APP = {
-  semaine:"27 août – 2 sept 2026",
-  mis_a_jour:"31 août 2026",
+  semaine:"17 sept – 23 sept 2026",
+  mis_a_jour:"18 sept 2026",
   speciaux:[
-    // ── IGA (27 août – 2 sept 2026, source: circulairesquebec.com) ──
-    {id:1,nom:"Ailes de poulet fraîches Ferme des Voltigeurs",mag:"IGA",px:2.99,av:15.99,fmt:"600 g",rb:81,ico:"🍗",cat:"viande",k:"ailes_poulet_iga"},
-    {id:2,nom:"Jambon fumé Olymel",mag:"IGA",px:3.19,av:17.19,rb:81,ico:"🍖",cat:"viande",k:"jambon_olymel",qc:true},
-    {id:3,nom:"Bœuf haché extra maigre",mag:"IGA",px:9.49,av:22.99,rb:59,ico:"🥩",cat:"viande",k:"boeuf_hache_iga"},
-    {id:4,nom:"Substitut de repas Boost Enfants",mag:"IGA",px:8.99,av:16.99,fmt:"6 x 237 mL",rb:47,ico:"🧃",cat:"epicerie",k:"boost_enfants"},
-    // ── Metro ──
-    {id:5,nom:"Côtelettes de porc fraîches désossées",mag:"Metro",px:2.77,av:4.29,u:"/lb",rb:35,ico:"🥩",cat:"viande",k:"cotelettes_metro"},
-    {id:6,nom:"Pâté au poulet Plaisirs Gastronomiques",mag:"Metro",px:5.99,av:13.99,fmt:"715-850 g",rb:57,ico:"🥧",cat:"epicerie",k:"pate_poulet"},
-    {id:7,nom:"Raisins rouges, verts ou noirs sans pépins",mag:"Metro",px:2.44,av:4.49,u:"/lb",rb:46,ico:"🍇",cat:"fruits",k:"raisins_metro"},
-    {id:8,nom:"Biscuits Célébration Leclerc",mag:"Metro",px:2.49,av:4.99,fmt:"200-350 g",rb:50,ico:"🍪",cat:"epicerie",k:"biscuits_leclerc",qc:true},
-    {id:9,nom:"Pains à hot-dog ou hamburger Pom",mag:"Metro",px:2.66,av:4.99,fmt:"4-8 un.",rb:47,ico:"🍞",cat:"epicerie",k:"pains_pom",qc:true},
-    // ── Super C ──
-    {id:10,nom:"Framboises ou mûres",mag:"Super C",px:1.44,av:4.99,fmt:"170 g",rb:71,ico:"🫐",cat:"fruits",k:"framboises_sc"},
-    {id:11,nom:"Pommes de terre blanches ou à chair jaune",mag:"Super C",px:1.97,av:5.00,fmt:"10 lb",rb:61,ico:"🥔",cat:"legumes",k:"patates_sc"},
-    {id:12,nom:"Poivrons verts",mag:"Super C",px:0.88,av:1.99,u:"/lb",rb:56,ico:"🫑",cat:"legumes",k:"poivrons_sc"},
-    {id:13,nom:"Laitue Iceberg",mag:"Super C",px:0.88,av:1.99,rb:56,ico:"🥬",cat:"legumes",k:"laitue_sc"},
-    {id:14,nom:"Chou-fleur",mag:"Super C",px:1.77,av:3.99,rb:56,ico:"🥦",cat:"legumes",k:"choufleur_sc"},
-    // ── Maxi ──
-    {id:15,nom:"Soupe Aylmer",mag:"Maxi",px:0.75,av:1.39,fmt:"284 mL",rb:46,ico:"🥫",cat:"epicerie",k:"soupe_aylmer"},
-    {id:16,nom:"Petits gâteaux Vachon",mag:"Maxi",px:2.68,av:4.98,fmt:"250-311 g",rb:46,ico:"🧁",cat:"epicerie",k:"gateaux_vachon_maxi",qc:true},
-    {id:17,nom:"Biscuits Dare, Normandie, Météo ou Maxi Fruits",mag:"Maxi",px:2.22,av:3.79,fmt:"280 g",rb:41,ico:"🍪",cat:"epicerie",k:"biscuits_dare_maxi"},
-    // ── Walmart ──
-    {id:18,nom:"Lait au chocolat Beatrice 1%",mag:"Walmart",px:0.98,av:2.98,fmt:"750 mL",rb:67,ico:"🥛",cat:"laitier",k:"lait_choc_beatrice"},
-    {id:19,nom:"Lait au chocolat Québon",mag:"Walmart",px:1.47,av:2.98,rb:51,ico:"🥛",cat:"laitier",k:"lait_choc_quebon",qc:true},
-    {id:20,nom:"Lait au chocolat Sealtest",mag:"Walmart",px:0.98,av:1.93,rb:49,ico:"🥛",cat:"laitier",k:"lait_choc_sealtest"},
-    // ── Provigo / Costco : aucun spécial vérifiable cette semaine (sites JS/bloqués, absent de l'agrégateur circulairesquebec.com) ──
+    // ── IGA Québec (circulaire du 17 au 23 sept 2026) ──
+    {id:"iga-001",nom:"Viande de gibier pour fondue chinoise (surgelée) Gibiers Canabec",mag:"IGA",px:1.99,av:12.99,fmt:"200 g",rb:85,ico:"🦌",cat:"viande",qc:false},
+    {id:"iga-002",nom:"Blade roast (bœuf)",mag:"IGA",px:6.97,av:32.19,fmt:"emballage",rb:78,ico:"🥩",cat:"viande",qc:false},
+    {id:"iga-003",nom:"Pepperoni Roma",mag:"IGA",px:1.79,av:9.93,fmt:"emballage",rb:82,ico:"🌭",cat:"viande",qc:false},
+    {id:"iga-004",nom:"Couronne de brocoli",mag:"IGA",px:1.29,av:2.99,fmt:"unité",rb:57,ico:"🥦",cat:"legumes",qc:false},
+    {id:"iga-005",nom:"Citrons Compliments",mag:"IGA",px:2.88,av:6.99,fmt:"907 g",rb:59,ico:"🍋",cat:"fruits",qc:false},
+    // ── Metro (circulaire du 17 au 23 sept 2026) ──
+    {id:"metro-001",nom:"Pommes de terre blanches",mag:"Metro",px:1.99,av:6.99,fmt:"10 lb",rb:72,ico:"🥔",cat:"legumes",qc:false},
+    {id:"metro-002",nom:"Poireaux",mag:"Metro",px:2.99,av:7.99,fmt:"4 un.",rb:63,ico:"🥬",cat:"legumes",qc:false},
+    {id:"metro-003",nom:"Fruits Irrésistible",mag:"Metro",px:3.99,av:7.49,fmt:"400-600 g",rb:47,ico:"🍇",cat:"fruits",qc:false},
+    // ── Super C (circulaire du 17 au 23 sept 2026) ──
+    {id:"superc-001",nom:"Cœurs de laitue romaine",mag:"Super C",px:1.97,av:4.99,fmt:"3 un.",rb:61,ico:"🥬",cat:"legumes",qc:false},
+    {id:"superc-002",nom:"Pain baguette à l'ail Sélection",mag:"Super C",px:0.99,av:2.49,fmt:"284 g",rb:60,ico:"🥖",cat:"epicerie",qc:false},
+    {id:"superc-003",nom:"Saucisses fumées Hygrade",mag:"Super C",px:2.99,av:6.99,fmt:"450 g",rb:57,ico:"🌭",cat:"viande",qc:true},
+    {id:"superc-004",nom:"Pommes Mcintosh, Lobo ou Paula Red",mag:"Super C",px:3.44,av:6.99,fmt:"4 lb",rb:51,ico:"🍎",cat:"fruits",qc:false},
+    {id:"superc-005",nom:"Longe de porc entière désossée",mag:"Super C",px:1.94,av:3.79,u:"/lb",rb:48,ico:"🥩",cat:"viande",qc:false},
+    // ── Maxi (circulaire du 17 au 23 sept 2026) ──
+    {id:"maxi-001",nom:"Céleri, aubergine ou tomates Roma",mag:"Maxi",px:1.00,av:2.18,u:"/lb",rb:54,ico:"🍆",cat:"legumes",qc:false},
+    {id:"maxi-002",nom:"Pogo",mag:"Maxi",px:10.00,av:20.50,fmt:"boîte",rb:51,ico:"🌭",cat:"epicerie",qc:false},
+    {id:"maxi-003",nom:"Filets, burgers ou bâtonnets de poisson Sans Nom",mag:"Maxi",px:1.00,av:2.00,fmt:"454 g",rb:50,ico:"🐟",cat:"viande",qc:false},
+    // ── Provigo (circulaire du 17 au 23 sept 2026 — prix membres) ──
+    {id:"provigo-001",nom:"Plats cuisinés PC Menu Bleu",mag:"Provigo",px:8.00,av:12.00,fmt:"850 g-1,13 kg",rb:33,ico:"🍱",cat:"epicerie",qc:false},
+    {id:"provigo-002",nom:"Salsa, guacamole ou pretzel crisps PC",mag:"Provigo",px:5.00,av:6.00,fmt:"227-430 g",rb:17,ico:"🥫",cat:"epicerie",qc:false},
+    {id:"provigo-003",nom:"Olives Ziggy's",mag:"Provigo",px:6.00,av:7.00,fmt:"500 mL",rb:14,ico:"🫒",cat:"epicerie",qc:false},
+    {id:"provigo-004",nom:"Vin Wallaroo ou Smoky Bay",mag:"Provigo",px:14.00,av:15.00,fmt:"1 L",rb:7,ico:"🍷",cat:"epicerie",qc:false},
+    // ── Walmart et Costco: aucune donnée de circulaire vérifiable (prix régulier + rabais) trouvée cette semaine — voir note d'audit ──
   ],
   recettes:[
     {id:1,nom:"Rôti de porc braisé aux légumes",ico:"🥩",t:"2h",p:6,px:6.50,sp:["roti_porc","patates","tomates"],
@@ -473,8 +473,8 @@ function renderDeals(){
   if(filterQC) list = list.filter(d=>d.qc);
   else if(activeF!=="Tous") list = list.filter(d=>CAT[d.cat]===activeF);
   document.getElementById("deals-list").innerHTML = list.map(d=>`
-    <div class="deal cat-${d.cat}" style="cursor:pointer" onclick="if(event.target.closest('.chk')){return;} showDeal(${d.id})">
-      <div class="chk ${selSp.has(d.id)?'on':''}" onclick="togSp(${d.id})">${selSp.has(d.id)?'✓':''}</div>
+    <div class="deal cat-${d.cat}" style="cursor:pointer" onclick="if(event.target.closest('.chk')){return;} showDeal('${d.id}')">
+      <div class="chk ${selSp.has(d.id)?'on':''}" onclick="togSp('${d.id}')">${selSp.has(d.id)?'✓':''}</div>
       <div class="d-ico-wrap">${d.ico}</div>
       <div class="d-info">
         <div class="d-nom">${d.nom}</div>
@@ -714,7 +714,7 @@ function renderCirc(){
       <div style="background:#fff;padding:8px 0">
         ${deals.map(d=>{
           const inList = selSp.has(d.id);
-          return `<div onclick="showDeal(${d.id})" style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid #f2f2f7;cursor:pointer;active:background:#f5f5f7">
+          return `<div onclick="showDeal('${d.id}')" style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid #f2f2f7;cursor:pointer;active:background:#f5f5f7">
             <div style="width:42px;height:42px;border-radius:12px;background:${bg};display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">${d.ico}</div>
             <div style="flex:1;min-width:0">
               <div style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${d.nom}</div>

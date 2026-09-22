@@ -259,24 +259,25 @@ function storeClass(mag){
 
 const APP = {
   semaine:"17 sept – 23 sept 2026",
-  mis_a_jour:"18 sept 2026",
+  mis_a_jour:"22 sept 2026",
   speciaux:[
     // ── IGA Québec (circulaire du 17 au 23 sept 2026) ──
     {id:"iga-001",nom:"Viande de gibier pour fondue chinoise (surgelée) Gibiers Canabec",mag:"IGA",px:1.99,av:12.99,fmt:"200 g",rb:85,ico:"🦌",cat:"viande",qc:false},
     {id:"iga-002",nom:"Blade roast (bœuf)",mag:"IGA",px:6.97,av:32.19,fmt:"emballage",rb:78,ico:"🥩",cat:"viande",qc:false},
     {id:"iga-003",nom:"Pepperoni Roma",mag:"IGA",px:1.79,av:9.93,fmt:"emballage",rb:82,ico:"🌭",cat:"viande",qc:false},
-    {id:"iga-004",nom:"Couronne de brocoli",mag:"IGA",px:1.29,av:2.99,fmt:"unité",rb:57,ico:"🥦",cat:"legumes",qc:false},
+    {id:"iga-004",nom:"Couronne de brocoli",mag:"IGA",px:1.29,av:2.99,fmt:"unité",rb:57,ico:"🥦",cat:"legumes",qc:true},
     {id:"iga-005",nom:"Citrons Compliments",mag:"IGA",px:2.88,av:6.99,fmt:"907 g",rb:59,ico:"🍋",cat:"fruits",qc:false},
     // ── Metro (circulaire du 17 au 23 sept 2026) ──
     {id:"metro-001",nom:"Pommes de terre blanches",mag:"Metro",px:1.99,av:6.99,fmt:"10 lb",rb:72,ico:"🥔",cat:"legumes",qc:false},
     {id:"metro-002",nom:"Poireaux",mag:"Metro",px:2.99,av:7.99,fmt:"4 un.",rb:63,ico:"🥬",cat:"legumes",qc:false},
     {id:"metro-003",nom:"Fruits Irrésistible",mag:"Metro",px:3.99,av:7.49,fmt:"400-600 g",rb:47,ico:"🍇",cat:"fruits",qc:false},
+    {id:"metro-004",nom:"Carottes, oignons jaunes, betteraves ou rutabagas",mag:"Metro",px:1.45,av:5.00,fmt:"5 lb",rb:71,ico:"🥕",cat:"legumes",qc:false},
     // ── Super C (circulaire du 17 au 23 sept 2026) ──
     {id:"superc-001",nom:"Cœurs de laitue romaine",mag:"Super C",px:1.97,av:4.99,fmt:"3 un.",rb:61,ico:"🥬",cat:"legumes",qc:false},
     {id:"superc-002",nom:"Pain baguette à l'ail Sélection",mag:"Super C",px:0.99,av:2.49,fmt:"284 g",rb:60,ico:"🥖",cat:"epicerie",qc:false},
     {id:"superc-003",nom:"Saucisses fumées Hygrade",mag:"Super C",px:2.99,av:6.99,fmt:"450 g",rb:57,ico:"🌭",cat:"viande",qc:true},
     {id:"superc-004",nom:"Pommes Mcintosh, Lobo ou Paula Red",mag:"Super C",px:3.44,av:6.99,fmt:"4 lb",rb:51,ico:"🍎",cat:"fruits",qc:false},
-    {id:"superc-005",nom:"Longe de porc entière désossée",mag:"Super C",px:1.94,av:3.79,u:"/lb",rb:48,ico:"🥩",cat:"viande",qc:false},
+    {id:"superc-005",nom:"Poivrons rouges, jaunes, orange ou verts de champs",mag:"Super C",px:1.25,av:1.99,u:"/lb",rb:37,ico:"🫑",cat:"legumes",qc:false},
     // ── Maxi (circulaire du 17 au 23 sept 2026) ──
     {id:"maxi-001",nom:"Céleri, aubergine ou tomates Roma",mag:"Maxi",px:1.00,av:2.18,u:"/lb",rb:54,ico:"🍆",cat:"legumes",qc:false},
     {id:"maxi-002",nom:"Pogo",mag:"Maxi",px:10.00,av:20.50,fmt:"boîte",rb:51,ico:"🌭",cat:"epicerie",qc:false},
@@ -286,7 +287,12 @@ const APP = {
     {id:"provigo-002",nom:"Salsa, guacamole ou pretzel crisps PC",mag:"Provigo",px:5.00,av:6.00,fmt:"227-430 g",rb:17,ico:"🥫",cat:"epicerie",qc:false},
     {id:"provigo-003",nom:"Olives Ziggy's",mag:"Provigo",px:6.00,av:7.00,fmt:"500 mL",rb:14,ico:"🫒",cat:"epicerie",qc:false},
     {id:"provigo-004",nom:"Vin Wallaroo ou Smoky Bay",mag:"Provigo",px:14.00,av:15.00,fmt:"1 L",rb:7,ico:"🍷",cat:"epicerie",qc:false},
-    // ── Walmart et Costco: aucune donnée de circulaire vérifiable (prix régulier + rabais) trouvée cette semaine — voir note d'audit ──
+    // ── Costco (circulaire jusqu'au 27 sept 2026) ──
+    {id:"costco-001",nom:"Assortiment de kombucha biologique Brew Dr.",mag:"Costco",px:9.99,av:14.99,fmt:"caisse de 6",rb:33,ico:"🧃",cat:"epicerie",qc:false},
+    {id:"costco-002",nom:"Céréales Croque Cannelle General Mills",mag:"Costco",px:7.99,av:10.99,fmt:"1,3 kg",rb:27,ico:"🥣",cat:"epicerie",qc:false},
+    {id:"costco-003",nom:"Gnocchi à poêler Olivieri",mag:"Costco",px:9.99,av:12.99,fmt:"duo pack",rb:23,ico:"🍝",cat:"epicerie",qc:true},
+    {id:"costco-004",nom:"Collation de fromage original La vache qui rit",mag:"Costco",px:10.99,av:13.99,fmt:"48 portions",rb:21,ico:"🧀",cat:"laitier",qc:false},
+    // ── Walmart: aucune donnée de circulaire vérifiable (prix régulier + rabais par produit) trouvée cette semaine — voir note d'audit ──
   ],
   recettes:[
     {id:1,nom:"Rôti de porc braisé aux légumes",ico:"🥩",t:"2h",p:6,px:6.50,sp:["roti_porc","patates","tomates"],
